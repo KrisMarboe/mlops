@@ -1,15 +1,15 @@
 import argparse
-import sys
 import os
 import pickle
+import sys
 
+import click
 import torch
 import torch.nn as nn
 from torch.utils.data import Dataset
-import click
-
 
 from src.models.model import MyAwesomeModel
+
 
 class dataset(Dataset):
     def __init__(self, images, labels):
