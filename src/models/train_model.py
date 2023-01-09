@@ -2,9 +2,9 @@ import argparse
 import os
 import pickle
 import sys
-import hydra
 
 import click
+import hydra
 import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
@@ -24,7 +24,7 @@ class dataset(Dataset):
         return len(self.data)
 
 
-@hydra.main(config_path="conf", config_name='config.yaml')
+@hydra.main(config_path="conf", config_name="config.yaml")
 def train(cfg):
     print("Training day and night")
     m_hparams = cfg.model
@@ -32,14 +32,14 @@ def train(cfg):
 
     torch.manual_seed(t_hparams.hyperparameters.seed)
 
-    device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
     print(f"Running on device: {device}")
 
     model = MyAwesomeModel(
         m_hparams.hyperparameters.bb_hidden_channels,
         m_hparams.hyperparameters.cl_hidden_channels,
         m_hparams.hyperparameters.cl_out_channel,
-        m_hparams.hyperparameters.stride
+        m_hparams.hyperparameters.stride,
     )
     model = model.to(device)
     with open(t_hparams.hyperparameters.train_file, "rb") as fp:
@@ -49,11 +49,11 @@ def train(cfg):
     trainloader = torch.utils.data.DataLoader(
         dataset(train_images, train_labels),
         batch_size=t_hparams.hyperparameters.batch_size,
-        shuffle=True
+        shuffle=True,
     )
     epochs = t_hparams.hyperparameters.epochs
-    best_loss = float('inf')
-    losses = [0]*epochs
+    best_loss = float("inf")
+    losses = [0] * epochs
 
     model_dir = "models/"
     if not os.path.exists(model_dir):
@@ -74,7 +74,9 @@ def train(cfg):
             print(f"Training loss: {losses[e]}")
             if losses[e] < best_loss:
                 best_loss = losses[e]
-                torch.save(model.state_dict(), 'trained_model.pt')  # (model.state_dict(), model_dir+'trained_model.pt')
+                torch.save(
+                    model.state_dict(), "trained_model.pt"
+                )  # (model.state_dict(), model_dir+'trained_model.pt')
                 print(f"Saved new model at epoch {e}")
             plt.figure()
             plt.plot(losses)
@@ -84,10 +86,6 @@ def train(cfg):
             plt.savefig("model_loss.png")  # ("reports/figures/day2_model_loss.png")
             plt.close()
 
+
 if __name__ == "__main__":
     train()
-
-
-
-
-
