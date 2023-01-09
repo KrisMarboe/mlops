@@ -2,7 +2,6 @@ import os
 import pickle
 
 import pytest
-import torch
 from torch.utils.data import Dataset
 
 from tests import _PATH_DATA

@@ -1,13 +1,9 @@
-import argparse
-import os
 import pickle
 import random
-import sys
 
 import click
 import matplotlib.pyplot as plt
 import torch
-import torch.nn as nn
 from torch.utils.data import Dataset
 
 from src.models.model import MyAwesomeModel

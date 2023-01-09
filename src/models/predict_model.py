@@ -1,11 +1,7 @@
-import argparse
-import os
 import pickle
-import sys
 
 import click
 import torch
-import torch.nn as nn
 from model import MyAwesomeModel
 from torch.utils.data import Dataset
 
