@@ -1,0 +1,6 @@
+hyperparameters:
+  lr: 1e-3
+  epochs: 10
+  batch_size: 64
+  seed: 54873195
+  train_file: "../../../data/processed/corruptmnist_train.pkl"

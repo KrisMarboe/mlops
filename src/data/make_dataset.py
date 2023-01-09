@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 import pickle
+from glob import glob
 from pathlib import Path
 
 import click
@@ -21,8 +22,9 @@ def main(input_filepath, output_filepath):
 
     train_images = []
     train_labels = []
-    for i in range(5):
-        train_i = np.load(input_filepath+f"/corruptmnist/train_{i}.npz", allow_pickle=True)
+    train_filepaths = glob(input_filepath+'/train*')
+    for fp in train_filepaths:
+        train_i = np.load(fp, allow_pickle=True)
         train_images.append(train_i['images'])
         train_labels.append(train_i['labels'])
     train_images = np.concatenate(train_images)
@@ -30,8 +32,7 @@ def main(input_filepath, output_filepath):
     train_labels = np.concatenate(train_labels)
     with open(output_filepath+'/corruptmnist_train.pkl', 'wb') as fp:
         pickle.dump((torch.from_numpy(train_images), torch.from_numpy(train_labels)), fp)
-
-    test = np.load(input_filepath+"/corruptmnist/test.npz", allow_pickle=True)
+    test = np.load(input_filepath+"/test.npz", allow_pickle=True)
     test_images = (test['images']-train_images.mean(axis=0))/(train_images.std(axis=0)+1e-9)
     test_labels = test['labels']
     with open(output_filepath+'/corruptmnist_test.pkl', 'wb') as fp:

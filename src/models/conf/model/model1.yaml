@@ -1,0 +1,5 @@
+hyperparameters:
+  bb_hidden_channels: [64,32,16,8]
+  cl_hidden_channels: 128
+  cl_out_channel: 10
+  stride: 3

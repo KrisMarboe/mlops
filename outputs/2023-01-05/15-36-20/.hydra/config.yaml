@@ -1,0 +1,17 @@
+model:
+  hyperparameters:
+    bb_hidden_channels:
+    - 64
+    - 32
+    - 16
+    - 8
+    cl_hidden_channels: 128
+    cl_out_channel: 10
+    stride: 3
+training:
+  hyperparameters:
+    lr: 0.001
+    epochs: 10
+    batch_size: 64
+    seed: 54873195
+    train_file: ../../../data/processed/corruptmnist_train.pkl

@@ -2,6 +2,8 @@ import argparse
 import os
 import pickle
 import sys
+import random
+import matplotlib.pyplot as plt
 
 import click
 import torch
@@ -34,17 +36,17 @@ def visualize(model_checkpoint, train_data):
     model.load_state_dict(state_dict)
     with open(train_data, "rb") as fp:
         train_images, train_labels = pickle.load(fp)
-    testloader = torch.utils.data.DataLoader(dataset(train_images, train_labels), batch_size=16, shuffle=True)
     with torch.no_grad():
-        # validation pass here
-        model.eval()
-        for images, labels in testloader:
-            images = images.view(images.shape[0], -1).float()
-            ps = torch.exp(model(images))
-            top_p, top_class = ps.topk(1, dim=1)
-            equals = top_class == labels.view(*top_class.shape)
-            accuracy = torch.mean(equals.type(torch.FloatTensor))
-    print(f'Accuracy: {accuracy.item() * 100}%')
+        j = random.randint(0, len(train_images))
+        embedding = model.backbone(train_images[j].reshape((1,28,28)).float())
+        plt.figure(figsize=(6, 6))
+        for i in range(embedding.shape[0]):
+            plt.subplot(3, 3, i+1)
+            plt.imshow(embedding[i])
+        plt.subplot(3, 3, 9)
+        plt.imshow(train_images[j])
+        plt.tight_layout()
+        plt.savefig("reports/figures/embedding.png")
 
 if __name__ == "__main__":
     visualize()
