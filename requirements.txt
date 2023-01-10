@@ -1,16 +1,10 @@
-# local package
--e .
-
 # external requirements
 Sphinx
 coverage
-awscli==1.27.38
 flake8
 Click==7.0
 matplotlib==3.6.2
 numpy==1.23.5
 python-dotenv==0.21.0
 setuptools==45.2.0
-torch==1.13.0
-torchvision
 pytest
