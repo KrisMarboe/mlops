@@ -8,3 +8,6 @@ numpy
 python-dotenv
 setuptools
 pytest
+dvc
+dvc[gs]
+hydra-core
